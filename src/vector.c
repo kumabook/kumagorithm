@@ -74,3 +74,9 @@ elem vector_peek(vector *self)
   return self->array[self->size - 1];
 }
 
+elem vector_get(vector *self, uint32_t index)
+{
+  assert(index < self->size);
+  return self->array[index];
+}
+
