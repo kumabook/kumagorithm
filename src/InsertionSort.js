@@ -1,14 +1,14 @@
 function* sort(a, less) {
   var N = a.length;
   for (var i = 0; i < N; i++) {
-    var min = i;
-    for (var j = i + 1; j < N; j++) {
-      yield [i, j];
-      if (less(a[j], a[min])) {
-        min = j;
+    for (var j = i; j > 0; j--) {
+      if (less(a[j], a[j - 1])) {
+        yield [i, j];
+        exch(a, j, j - 1);
+      } else {
+        break;
       }
     }
-    exch(a, i, min);
   }
 }
 
