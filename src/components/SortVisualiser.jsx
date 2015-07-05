@@ -15,7 +15,9 @@ var SortVisualiser = {
   getInitialState: function() {
     return {
       array: [],
-      selections: []
+      value: {
+        selections: []
+      }
     };
   },
   getDefaultProps: function() {
@@ -38,7 +40,7 @@ var SortVisualiser = {
     var svgContainer = d3.select(".svg");
     svgContainer.selectAll("*").remove();
     var data = [];
-    var selections = this.state.selections || [];
+    var selections = this.state.value.selections || [];
     for (var i = 0, l = this.state.array.length; i < l; i++) {
       var h = this.state.array[i] * height;
       var color = colors.normal;
@@ -64,7 +66,7 @@ var SortVisualiser = {
                               .style('fill', d => { return d.color} );
   },
   next: function() {
-    this.state.selections = this.generator.next().value;
+    this.state.value = this.generator.next().value;
     this.forceUpdate();
   },
   auto: function() {
@@ -76,6 +78,7 @@ var SortVisualiser = {
     }).bind(this), this.props.interval)
   },
   onClickResetButton: function() {
+    this.state.value.selections = [];
     this.initArray();
     this.forceUpdate();
   },
@@ -97,12 +100,17 @@ var SortVisualiser = {
   componentWillUnmount: function() {
   },
   render: function() {
+    var extra = null
+    if (this.getExtra) {
+      extra = this.getExtra();
+    }
     return (
       <div>
         <button id="reset-button"   type="button" onClick={this.onClickResetButton}>Reset</button>
         <button id="next-button"    type="button" onClick={this.onClickNextButton}>Next</button>
         <button id="auto-button"    type="button" onClick={this.onClickAutoButton}>Auto</button>
         <div>size: {this.state.array.length}</div>
+        {extra}
         <br/>
         <svg className="svg"
              width={this.state.array.length * width}

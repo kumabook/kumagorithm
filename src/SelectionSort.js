@@ -3,7 +3,7 @@ function* sort(a, less) {
   for (var i = 0; i < N; i++) {
     var min = i;
     for (var j = i + 1; j < N; j++) {
-      yield [i, j];
+      yield { selections: [i, j] };
       if (less(a[j], a[min])) {
         min = j;
       }

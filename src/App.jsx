@@ -2,6 +2,7 @@ var React                   = require('react');
 var StackVisualiser         = require('./components/StackVisualiser');
 var SelectionSortVisualiser = require('./components/SelectionSortVisualiser');
 var InsertionSortVisualiser = require('./components/InsertionSortVisualiser');
+var ShellSortVisualiser     = require('./components/ShellSortVisualiser');
 
 var App = React.createClass({
   render () {
@@ -10,6 +11,7 @@ var App = React.createClass({
       case 'stack':          Child = StackVisualiser; break;
       case 'selection-sort': Child = SelectionSortVisualiser; break;
       case 'insertion-sort': Child = InsertionSortVisualiser; break;
+      case 'shell-sort':     Child = ShellSortVisualiser; break;
       default:               Child = null;
     }
     return (
