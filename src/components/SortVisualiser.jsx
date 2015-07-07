@@ -67,6 +67,9 @@ var SortVisualiser = {
   },
   next: function() {
     this.state.value = this.generator.next().value;
+    if (!this.state.value) {
+      this.state.value.selections = [];
+    }
     this.forceUpdate();
   },
   auto: function() {
