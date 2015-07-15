@@ -40,7 +40,7 @@ var SortVisualiser = {
   initD3: function() {
   },
   updateD3: function() {
-    var svgContainer = d3.select(".svg");
+    var svgContainer = d3.select(React.findDOMNode(this.refs.svg));
     svgContainer.selectAll("*").remove();
     var data = [];
     var selections = this.state.value.selections || [];
@@ -121,7 +121,7 @@ var SortVisualiser = {
         <div>num of exchange: {this.state.value.numOfExch}</div>
         {extra}
         <br/>
-        <svg className="svg"
+        <svg ref="svg"
              width={this.state.array.length * width}
              height={height * MAX}>
         </svg>
