@@ -29,10 +29,6 @@ function render(container, route) {
 
 var kumagorithm = {
   App: App,
-  SelectionSortVisualiser,
-  InsertionSortVisualiser,
-  ShellSortVisualiser,
-  StackVisualiser,
   render: render
 };
 
