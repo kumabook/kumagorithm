@@ -18,7 +18,7 @@ after_success:
   - cd build
   - git add -A
   - git commit -m 'Update'
-  - 'git push --quiet https://$GH_TOKEN@github.com/kumabook/kumagorithm.git gh-pages 2> /dev/null'
+  - 'git push --force --quiet https://$GH_TOKEN@github.com/kumabook/kumagorithm.git gh-pages 2> /dev/null'
 
 env:
  global:
