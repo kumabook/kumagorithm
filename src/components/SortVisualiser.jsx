@@ -9,14 +9,17 @@ var MAX    = 50;
 var colors = {
   normal: '#77F9C3',
   highlight1: 'blue',
-  highlight2: 'red'
+  highlight2: 'red',
+  highlight3: 'yellow'
 };
 var SortVisualiser = {
   getInitialState: function() {
     return {
       array: [],
       value: {
-        selections: []
+        selections: [],
+        numOfComp: 0,
+        numOfExch: 0
       }
     };
   },
@@ -28,7 +31,7 @@ var SortVisualiser = {
   initArray: function() {
     this.state.array = [];
     for (var i = 0; i < N; i++) {
-      this.state.array.push(~~(Math.random() * MAX))
+      this.state.array.push(~~(Math.random() * MAX));
     }
     this.generator = this.props.sort.sort(this.state.array, (v, w) => {
       return v < w;
@@ -46,6 +49,7 @@ var SortVisualiser = {
       var color = colors.normal;
       if (selections[0] == i) color = colors.highlight1;
       if (selections[1] == i) color = colors.highlight2;
+      if (selections[2] == i) color = colors.highlight3;
       data.push({
         x: i * width,
         y: height * MAX - h,
@@ -75,7 +79,7 @@ var SortVisualiser = {
   auto: function() {
     setTimeout((() => {
       this.next();
-      if (!this.props.sort.isSorted(this.state.array,  (v, w) => { return v < w; })) {
+      if (this.state.value) {
         this.auto()
       }
     }).bind(this), this.props.interval)
@@ -113,6 +117,8 @@ var SortVisualiser = {
         <button type="button" onClick={this.onClickNextButton}>Next</button>
         <button type="button" onClick={this.onClickAutoButton}>Auto</button>
         <div>size: {this.state.array.length}</div>
+        <div>num of compare: {this.state.value.numOfComp}</div>
+        <div>num of exchange: {this.state.value.numOfExch}</div>
         {extra}
         <br/>
         <svg className="svg"
