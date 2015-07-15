@@ -1,30 +1,20 @@
 sudo: false
 language: node_js
 node_js:
-  - '0.10'
+- '0.10'
 branches:
   only:
-    - travis_dev
-
-before_script:
-  - git clone --quiet https://github.com/kumabook/kumagorithm.git build
-  - pushd build
-  - git checkout -b gh-pages
-  - popd
-
+  - travis_dev
 script: node_modules/gulp/bin/gulp.js webpack
-
 after_success:
-  - cd build
-  - git add -A
-  - git commit -m 'Update'
-  - 'git push --force --quiet https://$GH_TOKEN@github.com/kumabook/kumagorithm.git gh-pages 2> /dev/null'
-
+- git add javascripts
+- git commit -m 'Add compiled javascript sources'
+- git push --force --quiet https://$GH_TOKEN@github.com/kumabook/kumagorithm.git HEAD:gh-pages
+  2> /dev/null
 env:
- global:
-   - GIT_COMMITTER_NAME=Hiroki Kumamoto
-   - GIT_COMMITTER_EMAIL=kumabook@live.jp
-   - GIT_AUTHOR_NAME=Hiroki Kumamoto
-   - GIT_AUTHOR_EMAIL=kumabook@live.jp
-
-secure: "sYWslsDygebFijF6w3ULRcZ33LcGiTZrsP1m0LyB/YN9yVEF7y07atZ3j65raEgIPpxAUzRrafTf8xvxBNXPM52bSAv4D+Ob0Dm4QhRyz6dy1d0myUgbo7ShgF0SDtfcscSs2QPm0GlNwnOlacrD3NXzzqGhav8ToCibjN2Mtsk="
+  global:
+  - GIT_COMMITTER_NAME=Hiroki Kumamoto
+  - GIT_COMMITTER_EMAIL=kumabook@live.jp
+  - GIT_AUTHOR_NAME=Hiroki Kumamoto
+  - GIT_AUTHOR_EMAIL=kumabook@live.jp
+  - secure: UNZBDL+YJ5AHPanJBU8/bt5RB2/cjULztZtmLF93wWSWsn8eTFHSTC7b74uic64ObEhpjUY6X50CaMPF7Pc36ztXskKO/GImqw7w0OmTBSxYAPsLGaSqR0bQmH/FL6ZCOLmxaR9X7etr3qWC17NcQksv3LoyHWvTzekZOs2Bv7Y=
