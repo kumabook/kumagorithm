@@ -1,5 +1,5 @@
 var React  = require('react');
-var Stack = require('../stack');
+var Stack = require('../Stack');
 var d3     = require('d3');
 var count  = 1;
 var width  = 50;
