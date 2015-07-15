@@ -5,6 +5,8 @@ var webserver     = require('gulp-webserver');
 var plumber       = require('gulp-plumber');
 var webpack       = require('gulp-webpack');
 
+gulp.task('default', ['webpack', 'watch', 'webserver']);
+
 gulp.task('webserver', function() {
     gulp.src('./')
         .pipe(webserver({
