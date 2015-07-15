@@ -109,9 +109,9 @@ var SortVisualiser = {
     }
     return (
       <div>
-        <button id="reset-button"   type="button" onClick={this.onClickResetButton}>Reset</button>
-        <button id="next-button"    type="button" onClick={this.onClickNextButton}>Next</button>
-        <button id="auto-button"    type="button" onClick={this.onClickAutoButton}>Auto</button>
+        <button type="button" onClick={this.onClickResetButton}>Reset</button>
+        <button type="button" onClick={this.onClickNextButton}>Next</button>
+        <button type="button" onClick={this.onClickAutoButton}>Auto</button>
         <div>size: {this.state.array.length}</div>
         {extra}
         <br/>
