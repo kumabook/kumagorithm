@@ -1,6 +1,6 @@
 var React  = require('react');
 var d3     = require('d3');
-var count  = 1;
+
 var width  = 10;
 var height = 5;
 var radius = 15;
@@ -10,8 +10,10 @@ var colors = {
   normal: '#77F9C3',
   highlight1: 'blue',
   highlight2: 'red',
-  highlight3: 'yellow'
+  highlight3: 'yellow',
+  highlight4: 'green'
 };
+
 var SortVisualiser = {
   getInitialState: function() {
     return {
@@ -25,10 +27,17 @@ var SortVisualiser = {
   },
   getDefaultProps: function() {
     return {
-      interval: 50
+      interval: 50,
+      width: width,
+      height: height,
+      radius: radius,
+      N: N,
+      MAX: MAX,
+      colors: colors
     };
   },
   initArray: function() {
+    var N = this.props.N, MAX = this.props.MAX;
     this.state.array = [];
     for (var i = 0; i < N; i++) {
       this.state.array.push(~~(Math.random() * MAX));
@@ -40,6 +49,9 @@ var SortVisualiser = {
   initD3: function() {
   },
   updateD3: function() {
+    var width = this.props.width, height = this.props.height;
+    var MAX = this.props.MAX;
+    var colors = this.props.colors;
     var svgContainer = d3.select(React.findDOMNode(this.refs.svg));
     svgContainer.selectAll("*").remove();
     var data = [];
@@ -50,6 +62,7 @@ var SortVisualiser = {
       if (selections[0] == i) color = colors.highlight1;
       if (selections[1] == i) color = colors.highlight2;
       if (selections[2] == i) color = colors.highlight3;
+      if (selections[3] == i) color = colors.highlight4;
       data.push({
         x: i * width,
         y: height * MAX - h,
@@ -70,10 +83,8 @@ var SortVisualiser = {
                               .style('fill', d => { return d.color} );
   },
   next: function() {
-    this.state.value = this.generator.next().value;
-    if (!this.state.value) {
-      this.state.value.selections = [];
-    }
+    var value = this.generator.next().value;
+    if (value) this.state.value = value;
     this.forceUpdate();
   },
   auto: function() {
@@ -106,11 +117,7 @@ var SortVisualiser = {
   },
   componentWillUnmount: function() {
   },
-  render: function() {
-    var extra = null
-    if (this.getExtra) {
-      extra = this.getExtra();
-    }
+  getController: function() {
     return (
       <div>
         <button type="button" onClick={this.onClickResetButton}>Reset</button>
@@ -119,12 +126,6 @@ var SortVisualiser = {
         <div>size: {this.state.array.length}</div>
         <div>num of compare: {this.state.value.numOfComp}</div>
         <div>num of exchange: {this.state.value.numOfExch}</div>
-        {extra}
-        <br/>
-        <svg ref="svg"
-             width={this.state.array.length * width}
-             height={height * MAX}>
-        </svg>
       </div>
     );
   }

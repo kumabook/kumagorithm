@@ -11,6 +11,26 @@ var ShellSortVisualiser = React.createClass({
   getExtra: function() {
     var h = this.state.value.h ? this.state.value.h : '?';
     return <div>{h}-sort</div>
+  },
+  render: function() {
+    var width = this.props.width
+    var height = this.props.height
+    var MAX = this.props.MAX;
+    var extra = null
+    if (this.getExtra) {
+      extra = this.getExtra();
+    }
+    return (
+      <div>
+        {this.getController()}
+        {extra}
+        <br/>
+        <svg ref="svg"
+             width={this.state.array.length * width}
+             height={height * MAX}>
+        </svg>
+      </div>
+    );
   }
 });
 
