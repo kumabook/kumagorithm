@@ -89,11 +89,12 @@ var MergeSortVisualiser = React.createClass({
                               .style('fill', d => { return d.color} );
   },
   getExtra: function() {
-    var s = this.state.value.selections;
+    var s = this.state.value.selections || [];
+    var as = this.state.value.auxSelections || [];
     var lo = this.state.value.lo, hi = this.state.value.hi;
     return (
       <div>
-        <div>lo: {lo}, hi: {hi}, i: {s[0]},  j: {s[1]} </div>
+        <div>lo: {lo}, hi: {hi}, k: {s[0]}, i: {as[0]},  j: {as[1]} </div>
       </div>
     );
   },

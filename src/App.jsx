@@ -4,6 +4,7 @@ var SelectionSortVisualiser = require('./components/SelectionSortVisualiser');
 var InsertionSortVisualiser = require('./components/InsertionSortVisualiser');
 var ShellSortVisualiser     = require('./components/ShellSortVisualiser');
 var MergeSortVisualiser     = require('./components/MergeSortVisualiser');
+var QuickSortVisualiser     = require('./components/QuickSortVisualiser');
 
 var App = React.createClass({
   render () {
@@ -14,6 +15,7 @@ var App = React.createClass({
       case 'insertion-sort': Child = InsertionSortVisualiser; break;
       case 'shell-sort':     Child = ShellSortVisualiser;     break;
       case 'merge-sort':     Child = MergeSortVisualiser;     break;
+      case 'quick-sort':     Child = QuickSortVisualiser;     break;
       default:               Child = null;
     }
     return (

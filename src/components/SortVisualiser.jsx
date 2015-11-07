@@ -81,6 +81,25 @@ var SortVisualiser = {
                               .attr('stroke-width', 1)
                               .attr('stroke', '#136FFF')
                               .style('fill', d => { return d.color} );
+    if (selections.length >= 2) {
+      var lo = selections[0];
+      var hi = selections[1];
+      svgContainer.append("rect")
+                  .attr("x", lo * width)
+                  .attr("y", 0)
+                  .attr("width", (hi - lo + 1) * width)
+                  .attr("height", height * MAX)
+                  .style('fill', 'gray')
+                  .style('fill-opacity', 0.25);
+      svgContainer.append("rect")
+                  .attr("x", selections[3] * width)
+                  .attr("y", 0)
+                  .attr("width", width)
+                  .attr("height", height * MAX)
+                  .style('fill', 'gray')
+                  .style('fill-opacity',
+                         this.state.value.partitionEnd ? 0.5 : 0);
+    }
   },
   next: function() {
     var value = this.generator.next().value;
