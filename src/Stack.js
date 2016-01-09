@@ -2,14 +2,20 @@
  * Create a stack
  * @constructor
  * @param params parameter
- * @param params.capacity initial interal array size.
+ * @param params.capacity {int} initial interal array size.
+ * @param params.type {TypedArray} item type. default: Int16Array
  * @classdesc Represent a LIFO stack with resizing array.
  */
 var Stack = function(_params) {
   var params    = _params || {};
+  this.type     = params.type || Int16Array;
   this.capacity = params.capacity || 2;
-  this.buffer   = new Int8Array(new ArrayBuffer(this.capacity));
+  this.array    = this.allocate(this.capacity);
   this.size     = 0;
+};
+
+Stack.prototype.allocate = function(size) {
+  return new this.type(new ArrayBuffer(size * this.type.BYTES_PER_ELEMENT));
 };
 
 /**
@@ -38,12 +44,11 @@ Stack.prototype.isEmpty = function() {
 
 Stack.prototype.resize = function(capacity) {
   this.capacity = capacity;
-  var temp = new Int8Array(new ArrayBuffer(capacity));
+  var temp = this.allocate(capacity);
   for (var i = 0; i < this.size; i++) {
-    temp[i] = this.buffer[i];
+    temp[i] = this.array[i];
   }
-  this.buffer = null;
-  this.buffer = temp;
+  this.array = temp;
 };
 
 /**
@@ -53,7 +58,7 @@ Stack.prototype.resize = function(capacity) {
 Stack.prototype.push = function(val) {
   var l = this.capacity;
   if (this.size == l) this.resize(2 * l);
-  this.buffer[this.size++] = val;
+  this.array[this.size++] = val;
 };
 
 /**
@@ -62,7 +67,7 @@ Stack.prototype.push = function(val) {
  */
 Stack.prototype.pop = function() {
   var l = this.capacity;
-  var v = this.buffer[this.size - 1];
+  var v = this.array[this.size - 1];
   this.size--;
   if (this.size > 0 && this.size == l / 4) this.resize(l / 2);
   return v;
@@ -71,11 +76,11 @@ Stack.prototype.pop = function() {
  * Returns (but does not remove) the last-in item.
  */
 Stack.prototype.peek = function() {
-  return this.buffer[this.size - 1];
+  return this.array[this.size - 1];
 };
 
 Stack.prototype.get = function(index) {
-  return this.buffer[index];
+  return this.array[index];
 };
 
 Stack.prototype.toString = function() {
