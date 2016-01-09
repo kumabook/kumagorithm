@@ -67,8 +67,8 @@ var StackVisualiser = React.createClass({
         <div>size: {this.state.stack.getSize()}, capacity: {this.state.stack.getCapacity()}</div>
         <br/>
         <svg className="svg"
-             width={N * width}
-             height={(~~(this.state.stack.getCapacity() / N) + 1) * height}>
+             width={N * width + 2}
+             height={(~~(this.state.stack.getCapacity() / N) + 1) * height + 2}>
           {rects}
           {circles}
         </svg>
