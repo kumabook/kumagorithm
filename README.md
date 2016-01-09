@@ -1,7 +1,32 @@
-This repository is an archive of result studing algorithm.
+# kumagorithm
 
-# Basic
-* vector
+Basic data structure and algorithm libraries written in javascripts.
+And some algorithm are visualized on browser.
 
-# TODO
-* Sorting
+## Fundamentals
+- Stack
+- Queue
+
+
+## Sorting
+
+- Shell sort
+- Insertion sort
+- Merge sort
+- Quick sort
+
+## Searching
+
+...
+
+## Graphs
+
+...
+
+## Strings
+
+...
+
+## Others
+
+...
