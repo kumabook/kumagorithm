@@ -29,10 +29,11 @@ var StackVisualiser = React.createClass({
   },
   render: function() {
     var vec = this.state.stack;
+    var offset = 1;
     var rects = Array(vec.getCapacity()).fill().map((_, i) => {
       return {
-        x: ((i % N)) * width,
-        y: ~~(i / N) * height,
+        x: offset + ((i % N)) * width,
+        y: offset + ~~(i / N) * height,
         width:  width,
         height: height
       };
@@ -43,8 +44,8 @@ var StackVisualiser = React.createClass({
     });
     var circles = Array(vec.getSize()).fill().map((_, i) => {
       return {
-        x: (i % N) * width + 0.5 * width,
-        y:  ~~(i / N) * height + 0.5 * height,
+        x: offset + (i % N) * width + 0.5 * width,
+        y: offset + ~~(i / N) * height + 0.5 * height,
         radius: radius,
         text: vec.get(i)
       }
