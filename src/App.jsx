@@ -1,4 +1,5 @@
 var React                   = require('react');
+var ReactDOM                = require('react-dom');
 var StackVisualiser         = require('./components/StackVisualiser');
 var SelectionSortVisualiser = require('./components/SelectionSortVisualiser');
 var InsertionSortVisualiser = require('./components/InsertionSortVisualiser');
@@ -28,7 +29,7 @@ var App = React.createClass({
 });
 
 function render(container, route) {
-  React.render(<App route={route} />, container);
+  ReactDOM.render(<App route={route} />, container);
 };
 
 var kumagorithm = {

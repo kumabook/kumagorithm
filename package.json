@@ -33,9 +33,11 @@
     "mocha": "^2.2.5"
   },
   "dependencies": {
+    "babel-preset-react": "^6.3.13",
     "babel-runtime": "^5.6.4",
     "d3": "^3.5.5",
     "jsdoc": "^3.4.0",
-    "react": "^0.13.3"
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6"
   }
 }

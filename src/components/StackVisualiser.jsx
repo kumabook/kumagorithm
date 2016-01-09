@@ -1,6 +1,6 @@
-var React  = require('react');
-var Stack = require('../Stack');
-var d3     = require('d3');
+var React    = require('react');
+var ReactDOM = require('react-dom');
+var Stack    = require('../Stack');
 var count  = 1;
 var width  = 50;
 var height = 35;
@@ -32,25 +32,28 @@ var StackVisualiser = React.createClass({
     var offset = 1;
     var rects = Array(vec.getCapacity()).fill().map((_, i) => {
       return {
+        key: i,
         x: offset + ((i % N)) * width,
         y: offset + ~~(i / N) * height,
         width:  width,
         height: height
       };
-    }.map((r) => {
+    }).map((r) => {
       return <rect x={r.x} y={r.y} width={r.width} height={r.height}
                    stroke="#136FFF" strokeWidth="1"
-                   fill="#77F9C3" />
+                   fill="#77F9C3"
+                   key={r.key} />
     });
     var circles = Array(vec.getSize()).fill().map((_, i) => {
       return {
+        key: i,
         x: offset + (i % N) * width + 0.5 * width,
         y: offset + ~~(i / N) * height + 0.5 * height,
         radius: radius,
         text: vec.get(i)
       }
-    })).map((c) => {
-      return <g>
+    }).map((c) => {
+      return <g key={c.key}>
         <circle cx={c.x} cy={c.y} r={c.radius} fill="#D6FF58" />
         <text x={c.x} y={c.y} fill="#000000"
               textAnchor="middle" dominantBaseline="middle">{c.text}</text>
