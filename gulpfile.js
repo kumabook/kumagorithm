@@ -26,7 +26,7 @@ gulp.task('babel', function() {
 });
 
 gulp.task('watch', ['webserver'], function() {
-  gulp.watch(['./src/**/*.js', './src/**/*.jsx'], ['webpack']);
+  gulp.watch(['./src/**/*.js', './src/**/*.jsx'], ['webpack', 'doc']);
 });
 
 gulp.task('webpack', ['babel'], function() {
