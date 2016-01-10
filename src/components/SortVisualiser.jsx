@@ -1,5 +1,5 @@
-var React  = require('react');
-var d3     = require('d3');
+var React    = require('react');
+var ReactDOM = require('react-dom');
 
 var width  = 10;
 var height = 5;
@@ -46,14 +46,10 @@ var SortVisualiser = {
       return v < w;
     });
   },
-  initD3: function() {
-  },
-  updateD3: function() {
+  renderItems: function() {
     var width = this.props.width, height = this.props.height;
     var MAX = this.props.MAX;
     var colors = this.props.colors;
-    var svgContainer = d3.select(React.findDOMNode(this.refs.svg));
-    svgContainer.selectAll("*").remove();
     var data = [];
     var selections = this.state.value.selections || [];
     for (var i = 0, l = this.state.array.length; i < l; i++) {
@@ -64,42 +60,36 @@ var SortVisualiser = {
       if (selections[2] == i) color = colors.highlight3;
       if (selections[3] == i) color = colors.highlight4;
       data.push({
+        key: i,
         x: i * width,
         y: height * MAX - h,
         h: h,
         color: color
       });
     }
-    var rects   = svgContainer.selectAll("rect")
-                              .data(data)
-                              .enter()
-                              .append("rect");
-    var rectAttributes = rects.attr("x", d => { return d.x; })
-                              .attr("y", d => { return d.y; })
-                              .attr("width", width)
-                              .attr("height", d => { return d.h; })
-                              .attr('stroke-width', 1)
-                              .attr('stroke', '#136FFF')
-                              .style('fill', d => { return d.color} );
+    var rects = data.map((d) => {
+      return <rect key={d.key}
+                   x={d.x} y={d.y} width={width} height={d.h}
+                   stroke="#136FFF" strokeWidth="1" fill={d.color}>
+      </rect>
+    });
     if (selections.length >= 2) {
-      var lo = selections[0];
-      var hi = selections[1];
-      svgContainer.append("rect")
-                  .attr("x", lo * width)
-                  .attr("y", 0)
-                  .attr("width", (hi - lo + 1) * width)
-                  .attr("height", height * MAX)
-                  .style('fill', 'gray')
-                  .style('fill-opacity', 0.25);
-      svgContainer.append("rect")
-                  .attr("x", selections[3] * width)
-                  .attr("y", 0)
-                  .attr("width", width)
-                  .attr("height", height * MAX)
-                  .style('fill', 'gray')
-                  .style('fill-opacity',
-                         this.state.value.partitionEnd ? 0.5 : 0);
+      var lo = Math.min(selections[0], selections[1]);
+      var hi = Math.max(selections[0], selections[1]);
+      rects.push(<rect key="selection-1"
+                       x={lo * width} y="0"
+                       width={(hi - lo + 1) * width} height={height * MAX}
+                       fill="gray" fillOpacity="0.25">
+      </rect>);
     }
+    if (selections.length >= 4) {
+      rects.push(<rect key="selection-2"
+                       x={selections[3] * width} y="0"
+                       width={width} height={height * MAX}
+                       fill="gray" fillOpacity={this.state.value.partitionEnd ? 0.5 : 0}>
+      </rect>);
+    }
+    return rects;
   },
   next: function() {
     var value = this.generator.next().value;
@@ -129,10 +119,8 @@ var SortVisualiser = {
     this.initArray();
   },
   componentDidMount: function() {
-    this.updateD3();
   },
   componentDidUpdate: function() {
-    this.updateD3();
   },
   componentWillUnmount: function() {
   },

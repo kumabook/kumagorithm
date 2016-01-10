@@ -28,6 +28,7 @@ var ShellSortVisualiser = React.createClass({
         <svg ref="svg"
              width={this.state.array.length * width}
              height={height * MAX}>
+          {this.renderItems()}
         </svg>
       </div>
     );

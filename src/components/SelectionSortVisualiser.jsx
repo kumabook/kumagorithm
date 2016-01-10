@@ -12,6 +12,7 @@ var SelectionSortVisualiser = React.createClass({
     var width = this.props.width
     var height = this.props.height
     var MAX = this.props.MAX;
+    var items = this.renderItems();
     return (
       <div>
         {this.getController()}
@@ -19,6 +20,7 @@ var SelectionSortVisualiser = React.createClass({
         <svg ref="svg"
              width={this.state.array.length * width}
              height={height * MAX}>
+          {items}
         </svg>
       </div>
     );
