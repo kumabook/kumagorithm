@@ -15,6 +15,7 @@ function* sort(a, less) {
       exch(a, i, min);
     }
   }
+  return { selections: [0, 0, 0], numOfExch: ec, numOfComp: cc };
 }
 
 function exch(a, i, j) {
