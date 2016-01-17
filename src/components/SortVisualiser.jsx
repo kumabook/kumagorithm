@@ -4,17 +4,17 @@ var ReactMotion = require('react-motion');
 var Motion      = ReactMotion.Motion;
 var spring      = ReactMotion.spring;
 var presets     = ReactMotion.presets;
-var width  = 10;
+var width  = 20;
 var height = 5;
 var radius = 15;
 var N      = 30;
 var MAX    = 50;
 var colors = {
-  normal: '#77F9C3',
-  highlight1: 'blue',
-  highlight2: 'red',
-  highlight3: 'yellow',
-  highlight4: 'green'
+  normal: '#87CEEB',     // SkyBlue
+  highlight1: '#7B68EE', // MediumSlateBlue
+  highlight2: '#F4A460', // SandyBrown
+  highlight3: '#FFF8DC', // Cornsilk
+  highlight4: '#90EE90'  // LightGreen
 };
 
 var SortVisualiser = {
