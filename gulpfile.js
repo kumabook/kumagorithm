@@ -5,10 +5,19 @@ var webserver     = require('gulp-webserver');
 var plumber       = require('gulp-plumber');
 var webpack       = require('gulp-webpack');
 var jsdoc         = require('gulp-jsdoc3');
+var eslint        = require('gulp-eslint');
 var webpackConfig = require('./webpack.config');
 var jsdocConfig   = require('./jsdoc.config');
 
+
 gulp.task('default', ['webpack', 'watch', 'webserver']);
+
+gulp.task('eslint', function() {
+  return gulp.src(['src/**/*.jsx','gulpfile.js'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
 
 gulp.task('server', function() {
     gulp.src('./')
