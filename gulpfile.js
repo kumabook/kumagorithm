@@ -6,6 +6,7 @@ var plumber       = require('gulp-plumber');
 var webpack       = require('gulp-webpack');
 var jsdoc         = require('gulp-jsdoc3');
 var webpackConfig = require('./webpack.config');
+var jsdocConfig   = require('./jsdoc.config');
 
 gulp.task('default', ['webpack', 'watch', 'webserver']);
 
@@ -38,33 +39,5 @@ gulp.task('webpack', [], function() {
 
 gulp.task('doc', function (cb) {
   gulp.src(['README.md', './src/**/*.js'], {read: false})
-    .pipe(jsdoc(docConfig, cb));
+    .pipe(jsdoc(jsdocConfig, cb));
 });
-
-var docConfig = {
-  "tags": {
-    "allowUnknownTags": true
-  },
-  "source": {
-    "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "(^|\\/|\\\\)_"
-  },
-  "opts": {
-    "destination": "./docs/gen"
-  },
-  "plugins": [
-    "plugins/markdown"
-  ],
-  "templates": {
-    "cleverLinks": false,
-    "monospaceLinks": false,
-    "default": {
-      "outputSourceFiles": true
-    },
-    "path": "./node_modules/ink-docstrap/template",
-    "theme": "flatly",
-    "navType": "vertical",
-    "linenums": true,
-    "dateFormat": "MMMM Do YYYY, h:mm:ss a"
-  }
-};
