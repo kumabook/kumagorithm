@@ -5,10 +5,11 @@ var webserver     = require('gulp-webserver');
 var plumber       = require('gulp-plumber');
 var webpack       = require('gulp-webpack');
 var jsdoc         = require('gulp-jsdoc3');
+var webpackConfig = require('./webpack.config');
 
 gulp.task('default', ['webpack', 'watch', 'webserver']);
 
-gulp.task('webserver', function() {
+gulp.task('server', function() {
     gulp.src('./')
         .pipe(webserver({
             livereload: true,
@@ -21,40 +22,24 @@ gulp.task('babel', function() {
   return gulp.src(['./src/**/*.jsx', './src/**/*.js'])
         .pipe(plumber())
         .pipe(using())
-        .pipe(babel({optional: ['runtime']}))
-        .pipe(gulp.dest('javascripts/src/'));
+        .pipe(babel())
+        .pipe(gulp.dest('lib/'));
 });
 
-gulp.task('watch', ['webserver'], function() {
+gulp.task('watch', ['server'], function() {
   gulp.watch(['./src/**/*.js', './src/**/*.jsx'], ['webpack', 'doc']);
 });
 
-gulp.task('webpack', ['babel'], function() {
-  return gulp.src(wpConfig.entry)
-    .pipe(webpack(wpConfig))
-    .pipe(gulp.dest('./javascripts/dist'));
+gulp.task('webpack', [], function() {
+  return gulp.src(webpackConfig.entry)
+    .pipe(webpack(webpackConfig))
+    .pipe(gulp.dest(webpackConfig.output.path));
 });
 
 gulp.task('doc', function (cb) {
   gulp.src(['README.md', './src/**/*.js'], {read: false})
     .pipe(jsdoc(docConfig, cb));
 });
-
-var wpConfig = {
-  entry: './javascripts/src/App.js',
-  output: {
-    filename: 'kumagorithm.js'
-  },
-  devtool: 'inline-source-map',
-  module: {
-    loaders: [
-      { test: /App.js$/, loader: 'expose?kumagorithm'},
-    ]
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  }
-};
 
 var docConfig = {
   "tags": {
