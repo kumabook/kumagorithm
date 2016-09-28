@@ -1,13 +1,13 @@
 sudo: false
 language: node_js
 node_js:
-- '0.10'
+  - "6"
 branches:
   only:
   - master
-script: node_modules/gulp/bin/gulp.js webpack
+script: npm run build
 after_success:
-- git add javascripts
+- git add lib
 - git commit -m 'Add compiled javascript sources'
 - git push --force --quiet https://$GH_TOKEN@github.com/kumabook/kumagorithm.git HEAD:gh-pages
   2> /dev/null
