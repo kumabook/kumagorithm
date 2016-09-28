@@ -1,15 +1,19 @@
-var React                   = require('react');
-var ReactDOM                = require('react-dom');
-var StackVisualiser         = require('./components/StackVisualiser');
-var SelectionSortVisualiser = require('./components/SelectionSortVisualiser');
-var InsertionSortVisualiser = require('./components/InsertionSortVisualiser');
-var ShellSortVisualiser     = require('./components/ShellSortVisualiser');
-var MergeSortVisualiser     = require('./components/MergeSortVisualiser');
-var QuickSortVisualiser     = require('./components/QuickSortVisualiser');
+const React                   = require('react');
+const ReactDOM                = require('react-dom');
+const StackVisualiser         = require('./components/StackVisualiser');
+const SelectionSortVisualiser = require('./components/SelectionSortVisualiser');
+const InsertionSortVisualiser = require('./components/InsertionSortVisualiser');
+const ShellSortVisualiser     = require('./components/ShellSortVisualiser');
+const MergeSortVisualiser     = require('./components/MergeSortVisualiser');
+const QuickSortVisualiser     = require('./components/QuickSortVisualiser');
 
-var App = React.createClass({
-  render () {
-    var Child;
+const App = React.createClass({
+  propTypes: {
+    route: React.PropTypes.string,
+  },
+  render() {
+    /* eslint no-multi-spaces: 0 */
+    let Child;
     switch (this.props.route) {
       case 'stack':          Child = StackVisualiser;         break;
       case 'selection-sort': Child = SelectionSortVisualiser; break;
@@ -22,19 +26,18 @@ var App = React.createClass({
     return (
       <div>
         <h1>{this.props.route}</h1>
-        <Child/>
+        <Child />
       </div>
     );
-  }
+  },
 });
 
-function render(container, route) {
-  ReactDOM.render(<App route={route} />, container);
-};
-
-var kumagorithm = {
-  App: App,
-  render: render
+const kumagorithm = {
+  App,
+  render(container, r) {
+    ReactDOM.render(<App route={r} />, container);
+    return;
+  },
 };
 
 module.exports = kumagorithm;

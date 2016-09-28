@@ -1,22 +1,26 @@
-var React          = require('react');
-var ShellSort      = require('../ShellSort');
-var SortVisualiser = require('./SortVisualiser');
-var ShellSortVisualiser = React.createClass({
+const React          = require('react');
+const ShellSort      = require('../algorithm/ShellSort');
+const SortVisualiser = require('./SortVisualiser');
+
+const ShellSortVisualiser = React.createClass({
+  propTypes: {
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
+    MAX: React.PropTypes.number,
+  },
   mixins: [SortVisualiser],
-  getDefaultProps: function() {
-    return {
-      sort: ShellSort
-    };
+  getDefaultProps() {
+    return { sort: ShellSort };
   },
-  getExtra: function() {
-    var h = this.state.value.h ? this.state.value.h : '?';
-    return <div>{h}-sort</div>
+  getExtra() {
+    const h = this.state.value.h ? this.state.value.h : '?';
+    return <div>{h}-sort</div>;
   },
-  render: function() {
-    var width = this.props.width
-    var height = this.props.height
-    var MAX = this.props.MAX;
-    var extra = null
+  render() {
+    const width  = this.props.width;
+    const height = this.props.height;
+    const MAX    = this.props.MAX;
+    let extra  = null;
     if (this.getExtra) {
       extra = this.getExtra();
     }
@@ -24,15 +28,16 @@ var ShellSortVisualiser = React.createClass({
       <div>
         {this.getController()}
         {extra}
-        <br/>
-        <svg ref="svg"
-             width={this.state.array.length * width}
-             height={height * MAX}>
+        <br />
+        <svg
+          width={this.state.array.length * width}
+          height={height * MAX}
+        >
           {this.renderItems()}
         </svg>
       </div>
     );
-  }
+  },
 });
 
 module.exports = ShellSortVisualiser;

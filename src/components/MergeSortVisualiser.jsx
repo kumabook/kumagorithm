@@ -1,168 +1,170 @@
-var MergeSort      = require('../MergeSort');
-var SortVisualiser = require('./SortVisualiser');
-var React          = require('react');
-var ReactDOM       = require('react-dom');
-var ReactMotion    = require('react-motion');
-var Motion         = ReactMotion.Motion;
-var spring         = ReactMotion.spring;
-var presets        = ReactMotion.presets;
+const MergeSort      = require('../algorithm/MergeSort');
+const SortVisualiser = require('./SortVisualiser');
+const React          = require('react');
+const ReactMotion    = require('react-motion');
 
-var width  = 20;
-var height = 5;
-var radius = 15;
-var N      = 30;
-var MAX    = 50;
-var colors = {
+const Motion         = ReactMotion.Motion;
+const spring         = ReactMotion.spring;
+
+const width  = 20;
+const height = 5;
+const MAX    = 50;
+const colors = {
   normal: '#77F9C3',
-  highlight1: 'blue',
-  highlight2: 'red',
-  highlight3: 'yellow',
-  highlight4: 'green'
+  highlight1: '#0074d9',
+  highlight2: '#ff4136',
+  highlight3: '#f1c40f',
+  highlight4: '#2ecc40',
 };
 
-var MergeSortVisualiser = React.createClass({
+const MergeSortVisualiser = React.createClass({
+  propTypes: {
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
+    MAX: React.PropTypes.number,
+  },
   mixins: [SortVisualiser],
-  getDefaultProps: function() {
-    return {
-
-      sort: MergeSort
-    };
+  getDefaultProps() {
+    return { sort: MergeSort };
   },
-  componentDidMount: function() {
+  componentDidMount() {
   },
-  componentDidUpdate: function() {
+  componentDidUpdate() {
   },
-  renderLine: function() {
-    if (!this.state.value.selections) return;
-    var s = this.state.value.selections;
-    var lo = this.state.value.lo;
-    var hi = this.state.value.hi;
-
-    if (s.length == 0 || lo === undefined || hi === undefined) return;
-    var data = [
-      {key: 1, d: 'M ' + (lo * width) + ' 0 v 250', stroke: 'black', strokeWidth: 1},
-      {key: 2, d: 'M ' + ((hi+1) * width) + ' 0 v 250', stroke: 'black', strokeWidth: 1}
-    ];
-    return data.map((d) => {
-      return <path key={d.key}
-                   d={d.d} stroke={d.stroke} strokeWidth={d.strokeWidth}></path>
-    });
-  },
-  renderMain: function() {
-    var width = this.props.width, height = this.props.height;
-    var MAX = this.props.MAX;
-    var colors = this.props.colors;
-    var data = [];
-    var selections = this.state.value.selections || [];
-    var extraRects = [];
-    for (var i = 0, l = this.state.array.length; i < l; i++) {
-      var h = this.state.array[i] * height;
-      var color = colors.normal;
-      if (selections[0] == i) color = colors.highlight1;
-      if (selections[1] == i) color = colors.highlight2;
-      if (selections[2] == i) color = colors.highlight3;
-      if (selections[3] == i) color = colors.highlight4;
-      data.push({
-        key: i,
-        x: i * width,
-        y: height * MAX - h,
-        h: h,
-        color: color
-      });
-    }
-    return (
-      <g>
-        {data.map((d) => {
-           let style = {
-             x: spring(d.x),
-             y: spring(d.y),
-             width: width,
-             h: d.h,
-             color: d.color
-           };
-           return (
-             <Motion key={d.key}
-                     style={style}>
-               {d => {
-                  return (<rect
-                              x={d.x} y={d.y} width={width} height={d.h}
-                              stroke="#136FFF" strokeWidth="1" fill={d.color}>
-                  </rect>);
-                }
-               }
-             </Motion>
-           );
-         })
-        }
-      </g>
-    );
-  },
-  renderAux: function() {
-    if (!this.state.value.aux) return;
-    var array = this.state.value.aux;
-    var data = [];
-    var selections = this.state.value.auxSelections || [];
-    var lo = this.state.value.lo, hi = this.state.value.hi;
-
-    for (var i = lo; i <= hi; i++) {
-      if (array[i] === undefined) continue;
-      var h = array[i] * height;
-      var color = colors.normal;
-      if (selections[0] == i) color = colors.highlight2;
-      if (selections[1] == i) color = colors.highlight3;
-      data.push({
-        key: array[i],
-        x: i * width,
-        y: height * MAX - h,
-        h: h,
-        color: color
-      });
-    }
-    return (
-      <g>
-        {data.map((d) => {
-           let style = {
-             x: spring(d.x),
-             y: spring(d.y),
-             width: width,
-             h: d.h,
-             color: d.color
-           };
-           return (
-             <Motion key={d.key}
-                     style={style}>
-               {d => {
-                  return (
-                    <rect key={d.key}
-                          x={d.x} y={d.y} width={width} height={d.h}
-                          strokeWidth="1"
-                          stroke="#136FFF"
-                          fill={d.color}></rect>
-                  );
-                }
-               }
-             </Motion>
-           );
-         })
-        }
-      </g>
-    );
-  },
-  getExtra: function() {
-    var s = this.state.value.selections || [];
-    var as = this.state.value.auxSelections || [];
-    var lo = this.state.value.lo, hi = this.state.value.hi;
+  getExtra() {
+    const s  = this.state.value.selections || [];
+    const as = this.state.value.auxSelections || [];
+    const lo = this.state.value.lo;
+    const hi = this.state.value.hi;
     return (
       <div>
         <div>lo: {lo}, hi: {hi}, k: {s[0]}, i: {as[0]},  j: {as[1]} </div>
       </div>
     );
   },
-  render: function() {
-    var width = this.props.width
-    var height = this.props.height
-    var MAX = this.props.MAX;
-    var extra = null
+  renderLine() {
+    if (!this.state.value.selections) return null;
+    const s = this.state.value.selections;
+    const lo = this.state.value.lo;
+    const hi = this.state.value.hi;
+
+    if (s.length === 0 || lo === undefined || hi === undefined) return null;
+    const data = [
+      { key: 1, d: `M ${(lo * width)} 0 v 250`, stroke: 'black', strokeWidth: 1 },
+      { key: 2, d: `M ${((hi + 1) * width)} 0 v 250`, stroke: 'black', strokeWidth: 1 },
+    ];
+    return data.map(d => (
+      <path
+        key={d.key}
+        d={d.d} stroke={d.stroke} strokeWidth={d.strokeWidth}
+      />
+    ));
+  },
+  renderMain() {
+    const w = this.props.width;
+    const max = this.props.MAX;
+    const data = [];
+    const selections = this.state.value.selections || [];
+    for (let i = 0, l = this.state.array.length; i < l; i += 1) {
+      const h = this.state.array[i] * height;
+      let color = colors.normal;
+      if (selections[0] === i) color = colors.highlight1;
+      if (selections[1] === i) color = colors.highlight2;
+      if (selections[2] === i) color = colors.highlight3;
+      if (selections[3] === i) color = colors.highlight4;
+      data.push({
+        key: i,
+        x: i * w,
+        y: (height * max) - h,
+        h,
+        color,
+      });
+    }
+    return (
+      <g>
+        {data.map((d) => {
+          const style = {
+            x: spring(d.x),
+            y: spring(d.y),
+            width: w,
+            h: d.h,
+          };
+          const color = d.color;
+          return (
+            <Motion
+              key={d.key}
+              style={style}
+            >
+              {s => (
+                <rect
+                  x={s.x} y={s.y} width={w} height={s.h}
+                  stroke="#136FFF" strokeWidth="1" fill={color}
+                />
+               )
+              }
+            </Motion>
+          );
+        })
+       }
+      </g>
+    );
+  },
+  renderAux() {
+    if (!this.state.value.aux) return null;
+    const array = this.state.value.aux;
+    const data = [];
+    const selections = this.state.value.auxSelections || [];
+    const lo = this.state.value.lo;
+    const hi = this.state.value.hi;
+
+    for (let i = lo; i <= hi; i += 1) {
+      if (array[i] !== undefined) {
+        const h = array[i] * height;
+        let color = colors.normal;
+        if (selections[0] === i) color = colors.highlight2;
+        if (selections[1] === i) color = colors.highlight3;
+        data.push({
+          key: array[i],
+          x: i * width,
+          y: (height * MAX) - h,
+          h,
+          color,
+        });
+      }
+    }
+    return (
+      <g>
+        {data.map((d) => {
+          const style = {
+            x: spring(d.x),
+            y: spring(d.y),
+            width,
+            h: d.h,
+          };
+          const color = d.color;
+          return (
+            <Motion
+              key={d.key}
+              style={style}
+            >
+              {s => (
+                <rect
+                  key={s.key}
+                  x={s.x} y={s.y} width={width} height={s.h}
+                  strokeWidth="1" stroke="#136FFF" fill={color}
+                />
+              )}
+            </Motion>
+          );
+        })}
+      </g>
+    );
+  },
+  render() {
+    const w   = this.props.width;
+    const h   = this.props.height;
+    const max = this.props.MAX;
+    let extra = null;
     if (this.getExtra) {
       extra = this.getExtra();
     }
@@ -170,23 +172,25 @@ var MergeSortVisualiser = React.createClass({
       <div>
         {this.getController()}
         {extra}
-        <br/>
-        <svg ref="svg"
-             width={this.state.array.length * width}
-             height={height * MAX}>
+        <br />
+        <svg
+          width={this.state.array.length * w}
+          height={h * max}
+        >
           {this.renderMain()}
           {this.renderLine()}
         </svg>
-        <br/>
-        <svg ref="svg_aux"
-             width={this.state.array.length * width}
-             height={height * MAX}>
+        <br />
+        <svg
+          width={this.state.array.length * w}
+          height={h * max}
+        >
           {this.renderAux()}
           {this.renderLine()}
         </svg>
       </div>
     );
-  }
+  },
 });
 
 module.exports = MergeSortVisualiser;

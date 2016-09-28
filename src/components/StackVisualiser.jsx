@@ -1,80 +1,84 @@
-var React    = require('react');
-var ReactDOM = require('react-dom');
-var Stack    = require('../Stack');
-var count  = 1;
-var width  = 50;
-var height = 35;
-var radius = 15;
-var N      = 8;
-var StackVisualiser = React.createClass({
-  getInitialState: function() {
-    return {stack: new Stack()};
+const React    = require('react');
+const Stack    = require('../collections/Stack');
+
+const w        = 50;
+const h        = 35;
+const radius   = 15;
+const N        = 8;
+let count      = 1;
+const StackVisualiser = React.createClass({
+  getInitialState() {
+    return { stack: new Stack() };
   },
-  componentDidMount: function() {
-  },
-  componentDidUpdate: function() {
-  },
-  componentWillUnmount: function() {
-  },
-  onClickPushButton: function() {
-    this.state.stack.push(count++);
+  onClickPushButton() {
+    this.state.stack.push(count);
+    count += 1;
     this.forceUpdate();
   },
-  onClickPopButton: function() {
-    var val = this.state.stack.pop();
+  onClickPopButton() {
+    this.state.stack.pop();
     this.forceUpdate();
   },
-  onClickClearButton: function() {
+  onClickClearButton() {
     this.setState({ stack: new Stack() });
   },
-  render: function() {
-    var vec = this.state.stack;
-    var offset = 1;
-    var rects = Array(vec.getCapacity()).fill().map((_, i) => {
-      return {
+  render() {
+    const vec = this.state.stack;
+    const offset = 1;
+    const rects = Array(vec.getCapacity()).fill().map((_, i) => (
+      {
         key: i,
-        x: offset + ((i % N)) * width,
-        y: offset + ~~(i / N) * height,
-        width:  width,
-        height: height
-      };
-    }).map((r) => {
-      return <rect x={r.x} y={r.y} width={r.width} height={r.height}
-                   stroke="#136FFF" strokeWidth="1"
-                   fill="#77F9C3"
-                   key={r.key} />
-    });
-    var circles = Array(vec.getSize()).fill().map((_, i) => {
-      return {
-        key: i,
-        x: offset + (i % N) * width + 0.5 * width,
-        y: offset + ~~(i / N) * height + 0.5 * height,
-        radius: radius,
-        text: vec.get(i)
+        x: offset + ((i % N) * w),
+        y: offset + (Math.floor(i / N) * h),
+        width: w,
+        height: h,
       }
-    }).map((c) => {
-      return <g key={c.key}>
+    )).map(r => (
+      <rect
+        x={r.x} y={r.y} width={r.width} height={r.height}
+        stroke="#136FFF" strokeWidth="1"
+        fill="#77F9C3"
+        key={r.key}
+      />
+    ));
+    const circles = Array(vec.getSize()).fill().map((_, i) => (
+      {
+        key: i,
+        x: offset + ((i % N) * w) + (0.5 * w),
+        y: offset + (Math.floor((i / N) * h) + (0.5 * h)),
+        radius,
+        text: vec.get(i),
+      }
+    )).map(c => (
+      <g key={c.key}>
         <circle cx={c.x} cy={c.y} r={c.radius} fill="#D6FF58" />
-        <text x={c.x} y={c.y} fill="#000000"
-              textAnchor="middle" dominantBaseline="middle">{c.text}</text>
+        <text
+          x={c.x} y={c.y} fill="#000000"
+          textAnchor="middle" dominantBaseline="middle"
+        >
+          {c.text}
+        </text>
       </g>
-    });
+    ));
+    const num = Math.floor(this.state.stack.getCapacity() / N);
     return (
       <div>
-        <button id="push-button"   type="button" onClick={this.onClickPushButton}>Push</button>
-        <button id="pop-button"    type="button" onClick={this.onClickPopButton}>Pop</button>
-        <button id="clear-button"  type="button" onClick={this.onClickClearButton}>cleard</button>
+        <button id="push-button" type="button" onClick={this.onClickPushButton}>Push</button>
+        <button id="pop-button" type="button" onClick={this.onClickPopButton}>Pop</button>
+        <button id="clear-button" type="button" onClick={this.onClickClearButton}>cleard</button>
         <div>size: {this.state.stack.getSize()}, capacity: {this.state.stack.getCapacity()}</div>
-        <br/>
-        <svg className="svg"
-             width={N * width + 2}
-             height={(~~(this.state.stack.getCapacity() / N) + 1) * height + 2}>
+        <br />
+        <svg
+          className="svg"
+          width={(N * w) + 2}
+          height={((num + 1) * h) + 2}
+        >
           {rects}
           {circles}
         </svg>
       </div>
     );
-  }
+  },
 });
 
 module.exports = StackVisualiser;

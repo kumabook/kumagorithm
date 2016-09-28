@@ -1,30 +1,33 @@
-var React          = require('react');
-var SelectionSort  = require('../SelectionSort');
-var SortVisualiser = require('./SortVisualiser');
-var SelectionSortVisualiser = React.createClass({
-  mixins: [SortVisualiser],
-  getDefaultProps: function() {
-    return {
-      sort: SelectionSort
-    };
+const React          = require('react');
+const SelectionSort  = require('../algorithm/SelectionSort');
+const SortVisualiser = require('./SortVisualiser');
+
+const SelectionSortVisualiser = React.createClass({
+  propTypes: {
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
+    MAX: React.PropTypes.number,
   },
-  render: function() {
-    var width = this.props.width
-    var height = this.props.height
-    var MAX = this.props.MAX;
-    var items = this.renderItems();
+  mixins: [SortVisualiser],
+  getDefaultProps: () => ({ sort: SelectionSort }),
+  render() {
+    const width  = this.props.width;
+    const height = this.props.height;
+    const MAX    = this.props.MAX;
+    const items  = this.renderItems();
     return (
       <div>
         {this.getController()}
-        <br/>
-        <svg ref="svg"
-             width={this.state.array.length * width}
-             height={height * MAX}>
+        <br />
+        <svg
+          width={this.state.array.length * width}
+          height={height * MAX}
+        >
           {items}
         </svg>
       </div>
     );
-  }
+  },
 });
 
 module.exports = SelectionSortVisualiser;
