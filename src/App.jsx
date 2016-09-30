@@ -7,29 +7,30 @@ const ShellSortVisualiser     = require('./components/ShellSortVisualiser');
 const MergeSortVisualiser     = require('./components/MergeSortVisualiser');
 const QuickSortVisualiser     = require('./components/QuickSortVisualiser');
 
+const visualizers = [
+  { name: 'stack'         , component: StackVisualiser },
+  { name: 'selection-sort', component: SelectionSortVisualiser },
+  { name: 'insertion-sort', component: InsertionSortVisualiser },
+  { name: 'shell-sort'    , component: ShellSortVisualiser },
+  { name: 'merge-sort'    , component: MergeSortVisualiser },
+  { name: 'quick-sort'    , component: QuickSortVisualiser }
+];
+
+
 const App = React.createClass({
   propTypes: {
     route: React.PropTypes.string,
   },
   render() {
-    /* eslint no-multi-spaces: 0 */
-    let Child;
-    switch (this.props.route) {
-      case 'stack':          Child = StackVisualiser;         break;
-      case 'selection-sort': Child = SelectionSortVisualiser; break;
-      case 'insertion-sort': Child = InsertionSortVisualiser; break;
-      case 'shell-sort':     Child = ShellSortVisualiser;     break;
-      case 'merge-sort':     Child = MergeSortVisualiser;     break;
-      case 'quick-sort':     Child = QuickSortVisualiser;     break;
-      default:               Child = null;
-    }
+    const visuals = visualizers.filter((v) => this.props.route === v.name)
+                               .map((v) => <v.component key={v.name} />);
     return (
       <div>
         <h1>{this.props.route}</h1>
-        <Child />
+        {visuals}
       </div>
     );
-  },
+  }
 });
 
 const kumagorithm = {
@@ -38,6 +39,22 @@ const kumagorithm = {
     ReactDOM.render(<App route={r} />, container);
     return;
   },
+  renderIndex(container, r) {
+    const items = visualizers.map((v) => (
+      <a className="navbar-item" key={v.name} href={`#${v.name}`}>{v.name}</a>)
+    );
+    ReactDOM.render(
+      <div>
+        <div className="navbar">
+          {items}
+        </div>
+        <div className="visualiser-container">
+          <App route={r} />
+        </div>
+      </div>
+    , container);
+    return;
+  }
 };
 
 module.exports = kumagorithm;

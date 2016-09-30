@@ -1,7 +1,6 @@
 <html>
-  This github page has only javascripts in /javascripts/*. <br>
-  Host htmls are in <a href="http://kumabook.github.io/playground.html">there</a>
   <script type="text/javascript" src="lib/kumagorithm.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/app.css">
   <div id="container"></div>
   <script type="text/javascript">
     window.onload = function() {
@@ -11,7 +10,7 @@
         kumagorithm.render(container, route)
       });
       var route = window.location.hash.substr(1);
-      kumagorithm.render(container, route);
+      kumagorithm.renderIndex(container, route);
     }
   </script>
 </html>
