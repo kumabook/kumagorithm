@@ -7,10 +7,10 @@
       var container = document.getElementById('container');
       window.addEventListener('hashchange', function() {
         var route = window.location.hash.substr(1);
-        kumagorithm.render(container, route)
+        kumagorithm.renderWithIndex(container, route);
       });
       var route = window.location.hash.substr(1);
-      kumagorithm.renderIndex(container, route);
+      kumagorithm.renderWithIndex(container, route);
     }
   </script>
 </html>

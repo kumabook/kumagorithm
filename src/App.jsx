@@ -39,7 +39,7 @@ const kumagorithm = {
     ReactDOM.render(<App route={r} />, container);
     return;
   },
-  renderIndex(container, r) {
+  renderWithIndex(container, r) {
     const items = visualizers.map((v) => (
       <a className="navbar-item" key={v.name} href={`#${v.name}`}>{v.name}</a>)
     );
