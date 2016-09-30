@@ -31,7 +31,7 @@ function isSorted(a, less) {
     if (less(a[i], a[i-1])) return false;
   }
   return true;
-};
+}
 
 module.exports = {
   sort: sort,

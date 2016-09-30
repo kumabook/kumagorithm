@@ -11,11 +11,11 @@ function *_sort(a, less, lo, hi, context) {
   var j = yield* partition(a, less, lo, hi, context);
   yield* _sort(a, less, lo, j-1, context);
   yield* _sort(a, less, j+1, hi, context);
-};
+}
 
 function* partition(a, less, lo, hi, context) {
   var i = lo, j = hi + 1;
-  while (true) {
+  for (;;) {
     context.cc++;
     while (less(a[++i], a[lo])) {
       yield { selections: [lo, hi, i, j], numOfExch: context.ec, numOfComp: context.cc };

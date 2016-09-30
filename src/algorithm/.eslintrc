@@ -1,0 +1,15 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": false
+  },
+  "rules": {
+    "no-multi-spaces": ["error", {
+      exceptions: {
+        "VariableDeclarator": true,
+        "ImportDeclaration": true,
+        "Property": false
+      }
+    }]
+  }
+}

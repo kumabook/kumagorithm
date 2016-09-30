@@ -8,12 +8,12 @@ const MergeSortVisualiser     = require('./components/MergeSortVisualiser');
 const QuickSortVisualiser     = require('./components/QuickSortVisualiser');
 
 const visualizers = [
-  { name: 'stack'         , component: StackVisualiser },
+  { name: 'stack', component: StackVisualiser },
   { name: 'selection-sort', component: SelectionSortVisualiser },
   { name: 'insertion-sort', component: InsertionSortVisualiser },
-  { name: 'shell-sort'    , component: ShellSortVisualiser },
-  { name: 'merge-sort'    , component: MergeSortVisualiser },
-  { name: 'quick-sort'    , component: QuickSortVisualiser }
+  { name: 'shell-sort', component: ShellSortVisualiser },
+  { name: 'merge-sort', component: MergeSortVisualiser },
+  { name: 'quick-sort', component: QuickSortVisualiser },
 ];
 
 
@@ -22,15 +22,15 @@ const App = React.createClass({
     route: React.PropTypes.string,
   },
   render() {
-    const visuals = visualizers.filter((v) => this.props.route === v.name)
-                               .map((v) => <v.component key={v.name} />);
+    const visuals = visualizers.filter(v => this.props.route === v.name)
+                               .map(v => <v.component key={v.name} />);
     return (
       <div>
         <h1>{this.props.route}</h1>
         {visuals}
       </div>
     );
-  }
+  },
 });
 
 const kumagorithm = {
@@ -40,7 +40,7 @@ const kumagorithm = {
     return;
   },
   renderWithIndex(container, r) {
-    const items = visualizers.map((v) => (
+    const items = visualizers.map(v => (
       <a className="navbar-item" key={v.name} href={`#${v.name}`}>{v.name}</a>)
     );
     ReactDOM.render(
@@ -54,7 +54,7 @@ const kumagorithm = {
       </div>
     , container);
     return;
-  }
+  },
 };
 
 module.exports = kumagorithm;

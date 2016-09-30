@@ -12,8 +12,8 @@ const jsdocConfig   = require('./jsdoc.config');
 
 gulp.task('default', ['webpack', 'watch', 'webserver']);
 
-gulp.task('eslint', () =>
-          gulp.src(['src/**/*.jsx', 'gulpfile.js'])
+gulp.task('lint', () =>
+          gulp.src(['src/**/*.jsx', 'src/algorithm/*.js', 'gulpfile.js'])
               .pipe(eslint())
               .pipe(eslint.format())
               .pipe(eslint.failAfterError()));
@@ -34,14 +34,15 @@ gulp.task('babel', () =>
               .pipe(gulp.dest('lib/')));
 
 gulp.task('watch', ['server'], () =>
-          gulp.watch(['./src/**/*.js', './src/**/*.jsx'], ['webpack', 'doc']));
+          gulp.watch(['./src/**/*.js', './src/**/*.jsx', '!./js/kumagorithm.js'],
+                     ['lint', 'webpack', 'doc']));
 
 gulp.task('webpack', [], () =>
           gulp.src(webpackConfig.entry)
               .pipe(webpack(webpackConfig))
               .pipe(gulp.dest(webpackConfig.output.path)));
 
-gulp.task('doc', cb => {
+gulp.task('doc', (cb) => {
   gulp.src(['README.md', './src/**/*.js'], { read: false })
       .pipe(jsdoc(jsdocConfig, cb));
   return;
