@@ -41,6 +41,8 @@ gulp.task('webpack', [], () =>
               .pipe(webpack(webpackConfig))
               .pipe(gulp.dest(webpackConfig.output.path)));
 
-gulp.task('doc', cb =>
-          gulp.src(['README.md', './src/**/*.js'], { read: false })
-              .pipe(jsdoc(jsdocConfig, cb)));
+gulp.task('doc', cb => {
+  gulp.src(['README.md', './src/**/*.js'], { read: false })
+      .pipe(jsdoc(jsdocConfig, cb));
+  return;
+});
