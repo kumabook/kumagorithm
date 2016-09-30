@@ -1,5 +1,5 @@
 const React    = require('react');
-const Stack    = require('../collections/Stack');
+const Stack    = require('../collections/TypedArrayStack');
 
 const w        = 50;
 const h        = 35;
