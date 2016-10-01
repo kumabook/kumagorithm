@@ -1,15 +1,11 @@
 /**
  * Create a stack
  * @constructor
- * @param params parameter
- * @param params.capacity {int} initial interal array size.
- * @param params.type {TypedArray} item type. default: Int16Array
  * @class desc Represent a LIFO stack with resizing array.
  */
-var Stack = function(_params) {
-  var params    = _params || {};
-  this.array    = [];
-  this.size     = 0;
+var Stack = function() {
+  this.array = [];
+  this.size  = 0;
 };
 
 /**
