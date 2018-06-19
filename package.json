@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "start": "gulp",
     "test": "node_modules/mocha/bin/mocha",
     "build": "gulp webpack"
   },
