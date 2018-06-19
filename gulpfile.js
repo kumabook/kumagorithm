@@ -10,7 +10,7 @@ const webpackConfig = require('./webpack.config');
 const jsdocConfig   = require('./jsdoc.config');
 
 
-gulp.task('default', ['webpack', 'watch', 'webserver']);
+gulp.task('default', ['webpack', 'watch', 'server']);
 
 gulp.task('lint', () =>
           gulp.src(['src/**/*.jsx', 'src/algorithm/*.js', 'gulpfile.js'])
