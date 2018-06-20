@@ -13,9 +13,6 @@ const SeamCarveVisualiser = React.createClass({
     };
   },
   componentDidMount() {
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseMove = this.onMouseMove.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
     const canvas = ReactDOM.findDOMNode(this.refs.canvas)
     const img  = new Image();
     img.src    = '/images/HJocean.png';
@@ -59,7 +56,6 @@ const SeamCarveVisualiser = React.createClass({
     e.preventDefault();
     const x = e.layerX;
     const y = e.layerY;
-//    console.log(`mouse: ${x}, ${y}`);
     const dx = Math.abs(this.state.mouseX - x);
     const dy = Math.abs(this.state.mouseY - y);
     if (dx < dy) {
