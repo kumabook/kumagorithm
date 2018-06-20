@@ -6,6 +6,7 @@ const InsertionSortVisualiser = require('./components/InsertionSortVisualiser');
 const ShellSortVisualiser     = require('./components/ShellSortVisualiser');
 const MergeSortVisualiser     = require('./components/MergeSortVisualiser');
 const QuickSortVisualiser     = require('./components/QuickSortVisualiser');
+const SeamCarveVisualiser     = require('./components/SeamCarveVisualiser');
 
 const visualizers = [
   { name: 'stack', component: StackVisualiser },
@@ -14,6 +15,7 @@ const visualizers = [
   { name: 'shell-sort', component: ShellSortVisualiser },
   { name: 'merge-sort', component: MergeSortVisualiser },
   { name: 'quick-sort', component: QuickSortVisualiser },
+  { name: 'seam-carver', component: SeamCarveVisualiser },
 ];
 
 
