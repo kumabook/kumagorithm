@@ -74,11 +74,14 @@ const SeamCarveVisualiser = React.createClass({
   },
   render() {
     return (
-      <canvas
-        ref="canvas"
-        width={this.state.imageWidth}
-        height={this.state.imageHeight}
-      />
+      <div>
+        <div>Resize image by dragging</div>
+        <canvas
+          ref="canvas"
+          width={this.state.imageWidth}
+          height={this.state.imageHeight}
+        />
+      </div>
     );
   }
 });
